@@ -1,0 +1,40 @@
+Project `NetCoreBase.Api\NetCoreBase.Api.csproj` added to the solution.
+Project `NetCoreBase.Application\NetCoreBase.Application.csproj` added to the solution.
+Project `NetCoreBase.Contracts\NetCoreBase.Contracts.csproj` added to the solution.
+Project `NetCoreBase.Domain\NetCoreBase.Domain.csproj` added to the solution.
+Project `NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj` added to the solution.
+
+
+$ dotnet build
+Restore complete (2.4s)
+  NetCoreBase.Domain succeeded (10.6s) → NetCoreBase.Domain\bin\Debug\net9.0\NetCoreBase.Domain.dll
+  NetCoreBase.Application succeeded (11.3s) → NetCoreBase.Application\bin\Debug\net9.0\NetCoreBase.Appl
+ication.dll
+  NetCoreBase.Contracts succeeded (11.3s) → NetCoreBase.Contracts\bin\Debug\net9.0\NetCoreBase.Contract
+s.dll
+  NetCoreBase.Api succeeded (13.2s) → NetCoreBase.Api\bin\Debug\net9.0\NetCoreBase.Api.dll
+  NetCoreBase.Infrastructure succeeded (2.5s) → NetCoreBase.Infrastructure\bin\Debug\net9.0\NetCoreBase
+.Infrastructure.dll
+
+Build succeeded in 16.8s
+
+
+$ dotnet add ./NetCoreBase.Api/ reference ./NetCoreBase.Contracts/ ./NetCoreBase.Application/
+Reference `..\NetCoreBase.Contracts\NetCoreBase.Contracts.csproj` added to the project.
+Reference `..\NetCoreBase.Application\NetCoreBase.Application.csproj` added to the project.
+
+
+$ dotnet add ./NetCoreBase.Infrastructure/ reference ./NetCoreBase.Application/                        
+Reference `..\NetCoreBase.Application\NetCoreBase.Application.csproj` added to the project.
+
+$ dotnet add ./NetCoreBase.Application/ reference ./NetCoreBase.Domain/
+Reference `..\NetCoreBase.Domain\NetCoreBase.Domain.csproj` added to the project.
+
+$ dotnet add ./NetCoreBase.Api/ reference ./NetCoreBase.Infrastructure/
+Reference `..\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj` added to the project.
+
+
+
+vscode
+D:\dotnet_project\NetCoreBase> dotnet build
+PS D:\dotnet_project\NetCoreBase> dotnet run --project .\NetCoreBase.Api\

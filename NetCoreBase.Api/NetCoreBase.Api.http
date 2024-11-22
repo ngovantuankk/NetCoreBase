@@ -1,0 +1,6 @@
+@NetCoreBase.Api_HostAddress = http://localhost:5166
+
+GET {{NetCoreBase.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

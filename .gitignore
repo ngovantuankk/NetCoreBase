@@ -1,0 +1,28 @@
+# ASP.NET Core
+
+# Compiled source files
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+*.dll
+*.exe
+*.app
+*.so
+*.dylib
+*.pdb
+*.cache
+*.ilk
+*.idb
+*.lib
+*.obj
+*.swp
+*.bak
+*.tmp
+*.ide

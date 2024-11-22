@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using NetCoreBase.Application.Services;
 using NetCoreBase.Contracts.Authentication;
 
 namespace NetCoreBase.Api.Controllers;
@@ -7,21 +8,37 @@ namespace NetCoreBase.Api.Controllers;
 [Route("auth")]
 public class AuthenticationController : ControllerBase
 {
+    private readonly IAuthService _authService;
+
+    public AuthenticationController(IAuthService authService)
+    {
+        _authService = authService;
+    }
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        var userData = new UserData(
-            Guid.NewGuid(),
+        // xử lý đăng ký ở service application
+        var authResult = _authService.Register(
             request.FirstName,
             request.LastName,
+            request.Address,
             request.Email,
-            request.Address
+            request.Password
+        );
+
+        //từ kết quả xủ lý register ở service chuyển đổi sang dữ liệu trả về api với contract
+        var userData = new UserData(
+            authResult.Id,
+            authResult.FirstName,
+            authResult.LastName,
+            authResult.Address,
+            authResult.Email
         );
         var response = new AuthResponse(
-            "Register successfully.",
-            true,
-            userData,
-            "token"
+            Message: "Register successfully.",
+            Success: true,
+            Data: userData,
+            Token: authResult.Token
         );
         return Ok(response);
     }
@@ -29,18 +46,25 @@ public class AuthenticationController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
+        // xử lý đăng nhập ở application
+        var authResult = _authService.Login(
+            request.Email,
+            request.Password
+        );
+
+        // chuyển đổi data sang contracts trước khi trả về client
         var userData = new UserData(
-            Guid.NewGuid(),
-            "Nguyễn",
-            "Khuyến",
-            "Việt nam",
-            request.Email
+            Id: authResult.Id,
+            FirstName: authResult.FirstName,
+            LastName: authResult.LastName,
+            Address: authResult.Address,
+            Email: authResult.Email
         );
         var response = new AuthResponse(
-            "Login successfully.",
-            true,
-            userData,
-            "Token..."
+            Message: "Login successfully.",
+            Success: true,
+            Data: userData,
+            Token: authResult.Token
         );
         return Ok(response);
     }

@@ -1,3 +1,34 @@
+$ dotnet new sln -o NetCoreBase
+$ cd NetCoreBase/
+$ dotnet new webapi -o NetCoreBase.Api
+$ dotnet new classlib -o NetCoreBase.Contracts
+$ dotnet new classlib -o NetCoreBase.Infrastructure
+$ dotnet new classlib -o NetCoreBase.Application
+$ dotnet new classlib -o NetCoreBase.Domain
+
+$ ls
+
+$ dotnet build
+Restore succeeded with 1 warning(s) in 0.2s
+    C:\Program Files\dotnet\sdk\9.0.100\NuGet.targets(180,5): warning : Unable to find a project to res
+tore!
+
+$ cat ./NetCoreBase.sln
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Global
+        GlobalSection(SolutionConfigurationPlatforms) = preSolution
+                Debug|Any CPU = Debug|Any CPU
+                Release|Any CPU = Release|Any CPU
+        EndGlobalSection
+        GlobalSection(SolutionProperties) = preSolution
+                HideSolutionNode = FALSE
+        EndGlobalSection
+EndGlobal
+
+$ dotnet sln add $(find . -name "*.csproj")
 Project `NetCoreBase.Api\NetCoreBase.Api.csproj` added to the solution.
 Project `NetCoreBase.Application\NetCoreBase.Application.csproj` added to the solution.
 Project `NetCoreBase.Contracts\NetCoreBase.Contracts.csproj` added to the solution.
@@ -38,3 +69,76 @@ Reference `..\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj` adde
 vscode
 D:\dotnet_project\NetCoreBase> dotnet build
 PS D:\dotnet_project\NetCoreBase> dotnet run --project .\NetCoreBase.Api\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

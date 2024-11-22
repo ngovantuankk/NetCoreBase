@@ -1,4 +1,3 @@
-using NetCoreBase.Application.Services;
 using NetCoreBase.Application;
 using NetCoreBase.Infrastructure;
 
@@ -7,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
     // đăng ký application và infrastructure vào DI container
     builder.Services
         .AddApplication()
-        .AddInfrastructure();
+        .AddInfrastructure(builder.Configuration);
 
     builder.Services.AddControllers();
 }

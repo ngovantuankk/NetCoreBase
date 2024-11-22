@@ -3,16 +3,23 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-
+using Microsoft.Extensions.Options;
 namespace NetCoreBase.Infrastructure.Authentication;
 
 public class JwtGenerator : IJwtGenerator
 {
+    private readonly JwtConfig _jwtConfig;
+
+    public JwtGenerator(IOptions<JwtConfig> jwtConfig)
+    {
+        _jwtConfig = jwtConfig.Value;
+    }
+
     public string GenerateJwt(Guid id, string firstName, string lastName, string address)
     {
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("key-secret-keyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")),
+                Encoding.UTF8.GetBytes(_jwtConfig.Secret)),
             SecurityAlgorithms.HmacSha256
         );
 
@@ -25,9 +32,9 @@ public class JwtGenerator : IJwtGenerator
         };
 
         var token = new JwtSecurityToken(
-            issuer: "Tuan Ngo",
-            audience: "Tuan KK",
-            expires: DateTime.Now.AddMinutes(120),
+            issuer: _jwtConfig.Issuer,
+            audience: _jwtConfig.Audience,
+            expires: DateTime.Now.AddMinutes(_jwtConfig.ExpiryMinutes),
             claims: claims,
             signingCredentials: signingCredentials
         );

@@ -4,6 +4,7 @@ using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
+using NetCoreBase.Domain.Entities;
 namespace NetCoreBase.Infrastructure.Authentication;
 
 public class JwtGenerator : IJwtGenerator
@@ -15,7 +16,7 @@ public class JwtGenerator : IJwtGenerator
         _jwtConfig = jwtConfig.Value;
     }
 
-    public string GenerateJwt(Guid id, string firstName, string lastName, string address)
+    public string GenerateJwt(User user)
     {
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
@@ -25,9 +26,9 @@ public class JwtGenerator : IJwtGenerator
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
-            new Claim(JwtRegisteredClaimNames.GivenName, firstName),
-            new Claim(JwtRegisteredClaimNames.FamilyName, lastName),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+            new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 

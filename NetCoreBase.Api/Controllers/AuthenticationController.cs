@@ -28,11 +28,11 @@ public class AuthenticationController : ControllerBase
 
         //từ kết quả xủ lý register ở service chuyển đổi sang dữ liệu trả về api với contract
         var userData = new UserData(
-            authResult.Id,
-            authResult.FirstName,
-            authResult.LastName,
-            authResult.Address,
-            authResult.Email
+            authResult.User.Id,
+            authResult.User.FirstName,
+            authResult.User.LastName,
+            authResult.User.Address,
+            authResult.User.Email
         );
         var response = new AuthResponse(
             Message: "Register successfully.",
@@ -54,11 +54,11 @@ public class AuthenticationController : ControllerBase
 
         // chuyển đổi data sang contracts trước khi trả về client
         var userData = new UserData(
-            Id: authResult.Id,
-            FirstName: authResult.FirstName,
-            LastName: authResult.LastName,
-            Address: authResult.Address,
-            Email: authResult.Email
+            Id: authResult.User.Id,
+            FirstName: authResult.User.FirstName,
+            LastName: authResult.User.LastName,
+            Address: authResult.User.Address,
+            Email: authResult.User.Email
         );
         var response = new AuthResponse(
             Message: "Login successfully.",

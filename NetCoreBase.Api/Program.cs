@@ -1,8 +1,14 @@
 using NetCoreBase.Application.Services;
+using NetCoreBase.Application;
+using NetCoreBase.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services.AddScoped<IAuthService, AuthService>(); // đăng ký IAuthService từ Application vào Api để sử dụng trong controllers
+    // đăng ký application và infrastructure vào DI container
+    builder.Services
+        .AddApplication()
+        .AddInfrastructure();
+
     builder.Services.AddControllers();
 }
 

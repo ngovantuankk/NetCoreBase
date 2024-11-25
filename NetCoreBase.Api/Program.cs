@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using NetCoreBase.Api.Errors;
+using NetCoreBase.Api.Common.Errors;
 using NetCoreBase.Application;
 using NetCoreBase.Infrastructure;
 

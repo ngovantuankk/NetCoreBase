@@ -1,5 +1,7 @@
+using ErrorOr;
 using NetCoreBase.Application.Common;
 using NetCoreBase.Application.Common.Persistence;
+using NetCoreBase.Domain.Common.Errors;
 using NetCoreBase.Domain.Entities;
 
 namespace NetCoreBase.Application.Services;
@@ -15,12 +17,12 @@ public class AuthService : IAuthService
         _userRepository = userRepository;
     }
 
-    public AuthResult Login(string email, string password)
+    public ErrorOr<AuthResult> Login(string email, string password)
     {
         // Csdl
         if (_userRepository.GetUserByEmail(email) is not User user || user.Password != password)
         {
-            throw new Exception("Email or Password incorrect!");
+            return new[] { Errors.Authentication.InvalidCredentials };
         };
         // tạo token
         var token = _jwtGenerator.GenerateJwt(user);
@@ -31,12 +33,12 @@ public class AuthService : IAuthService
         );
     }
 
-    public AuthResult Register(string firstName, string lastName, string address, string email, string password)
+    public ErrorOr<AuthResult> Register(string firstName, string lastName, string address, string email, string password)
     {
         // xử lý logic, csdl,....
         if (_userRepository.GetUserByEmail(email) is not null)
         {
-            throw new Exception("Email aldready exists!");
+            return Errors.User.DuplicateEmail;
         }
 
         var user = new User

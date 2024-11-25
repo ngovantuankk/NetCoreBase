@@ -1,10 +1,12 @@
 using System.Diagnostics;
+using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
+using NetCoreBase.Api.Common.Http;
 
-namespace NetCoreBase.Api.Errors;
+namespace NetCoreBase.Api.Common.Errors;
 public class NetCoreBaseProblemDetailsFactory : ProblemDetailsFactory
 {
     private readonly ApiBehaviorOptions _options;
@@ -90,9 +92,13 @@ public class NetCoreBaseProblemDetailsFactory : ProblemDetailsFactory
             problemDetails.Extensions["traceId"] = traceId;
         }
 
-        // them thuoc tinh tuy chinh
-        problemDetails.Extensions.Add("customProperty", "customValue");
+        var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+        if (errors is not null)
+        {
+            // them thuoc tinh tuy chinh
 
+            problemDetails.Extensions.Add("errorcodes", errors.Select(e => e.Code));
+        }
         _configure?.Invoke(new() { HttpContext = httpContext!, ProblemDetails = problemDetails });
     }
 }
